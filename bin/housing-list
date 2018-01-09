@@ -2,4 +2,4 @@
 
 require_relative '../lib/Housing_List'
 
-HousingList::Housing.new.house
+HousingList::Scraper.new.scrape_index
