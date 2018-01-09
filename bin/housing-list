@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require_relative '../lib/Housing_List'
+
+HousingList::Housing.new.house
