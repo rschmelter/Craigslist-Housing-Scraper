@@ -14,10 +14,29 @@ class HousingList::Scraper
         states[i] = state.text
         i += 1
       end
-      states
-    binding.pry
+      puts states
+
   end
 
+  def scrape_cities(state)
+    doc = Nokogiri::HTML(open('https://www.craigslist.org/about/sites'))
+    a = doc.css(".colmask").first
+    a.css(".box").each do |box_info|
+      box_info
+      binding.pry
+      if state == box_info.css("h4").text
+        @state = box_info
+
+      end
+    end
+
+
+  end
+  #
+  # def scrape_cities
+  #   i = 0
+  #
+  # end
 
 
 end

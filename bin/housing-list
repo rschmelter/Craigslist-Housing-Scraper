@@ -2,4 +2,5 @@
 
 require_relative '../lib/Housing_List'
 
-HousingList::Scraper.new.scrape_states
+# HousingList::Scraper.new.scrape_states
+HousingList::Scraper.new.scrape_cities("Alabama")
