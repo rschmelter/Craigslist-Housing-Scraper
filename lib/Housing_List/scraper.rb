@@ -19,19 +19,38 @@ class HousingList::Scraper
   end
 
   def scrape_cities(state)
+    i = 1
     doc = Nokogiri::HTML(open('https://www.craigslist.org/about/sites'))
     a = doc.css(".colmask").first
-    a.css(".box").each do |box_info|
-      box_info
-      binding.pry
-      if state == box_info.css("h4").text
-        @state = box_info
 
-      end
+    a.css(".box ul").each do |cities|
+        cities.text
+      #   binding.pry
+      #   if state == box_info.css("h4").text
+      #   @state = box_info
+      #
+      # end
     end
-
-
   end
+
+  def state_city_hash
+    i = 0
+    states = []
+    state_city = []
+    doc = Nokogiri::HTML(open('https://www.craigslist.org/about/sites'))
+    a = doc.css(".colmask").first
+      a.css(".box h4").each do |state|
+        state_name = state.text
+        states[i] = state_name
+        state_city[i] = {state_name => ""}
+
+        i += 1
+      end
+      state_city
+      binding.pry
+  end
+
+  # box_info.values returns box box_1
   #
   # def scrape_cities
   #   i = 0
