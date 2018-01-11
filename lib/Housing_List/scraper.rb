@@ -36,15 +36,14 @@ class HousingList::Scraper
   def state_city_hash
     i = 0
     states = []
-    state_city = []
+    state_city = {}
     doc = Nokogiri::HTML(open('https://www.craigslist.org/about/sites'))
     a = doc.css(".colmask").first
       a.css(".box h4").each do |state|
         state_name = state.text
         states[i] = state_name
-        state_city[i] = {state_name => ""}
-
-        i += 1
+        # I'm trying to create state/city hashes by interating through the states first and then adding the cities as values in another method.
+      i += 1
       end
       state_city
       binding.pry
