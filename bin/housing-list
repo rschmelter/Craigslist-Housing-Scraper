@@ -3,5 +3,5 @@
 require_relative '../lib/Housing_List'
 
 # HousingList::Scraper.new.scrape_states
-HousingList::Scraper.new.scrape_states
-HousingList::Scraper.new.state_city_hash
+# HousingList::Scraper.new.scrape_states
+HousingList::Scraper.new.call

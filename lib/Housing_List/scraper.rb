@@ -4,6 +4,11 @@ require 'pry'
 
 class HousingList::Scraper
 
+  def call
+    scrape_states
+    state_hash
+    state_city_hash
+  end
 
   def scrape_states
     i = 0
@@ -14,47 +19,53 @@ class HousingList::Scraper
         states[i] = state.text
         i += 1
       end
-      puts states
-
+      states
   end
 
-  def scrape_cities(state)
-    i = 1
-    doc = Nokogiri::HTML(open('https://www.craigslist.org/about/sites'))
-    a = doc.css(".colmask").first
+  def state_hash
+    @state_city = {}
+    scrape_states.each do |state|
+      state_sym = state.to_sym
+      @state_city[state_sym] = nil
 
-    a.css(".box ul").each do |cities|
-        cities.text
-      #   binding.pry
-      #   if state == box_info.css("h4").text
-      #   @state = box_info
-      #
-      # end
-    end
-  end
-
-  def state_city_hash
-    i = 0
-    states = []
-    state_city = {}
-    doc = Nokogiri::HTML(open('https://www.craigslist.org/about/sites'))
-    a = doc.css(".colmask").first
-      a.css(".box h4").each do |state|
-        state_name = state.text
-        states[i] = state_name
-        # I'm trying to create state/city hashes by interating through the states first and then adding the cities as values in another method.
-      i += 1
       end
-      state_city
-      binding.pry
-  end
+      @state_city
+    end
 
-  # box_info.values returns box box_1
+    def state_city_hash
+      i = 0
+      keys = @state_city.keys
+      doc = Nokogiri::HTML(open('https://www.craigslist.org/about/sites'))
+      a = doc.css(".colmask").first
+      a.css(".box ul").each do |cities|
+        @state_city[keys[i]] = [cities.text]
+        i += 1
+        binding.pry
+      end
+      @state_city
+
+# Need to parse the cities so that they are seperate items in an array instead of just one.
+
+    end
+
+
+
+  # def state_city_hash
+  #   @state_city = {}
+  #   doc = Nokogiri::HTML(open('https://www.craigslist.org/about/sites'))
+  #   a = doc.css(".colmask").first
+  #     a.css(".box h4").each do |state|
+  #       state_string = state.text.to_sym
+  #       @state_city[state_string] = nil
   #
-  # def scrape_cities
-  #   i = 0
+  #     end
+  #     a.css (".box h4 li").each do |city|
+  #       @state
+  #     @state_city
+  #     binding.pry
   #
-  # end
+  #   end
+
 
 
 end
