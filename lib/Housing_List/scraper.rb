@@ -12,8 +12,8 @@ class HousingList::Scraper
     # city_arrays
     # state_city_hash
     scrape_rental_block("https://bozeman.craigslist.org/")
-    scrape_rental_options
-    # rental_option_href
+    # scrape_rental_options
+    rental_options_href
 
   end
 
@@ -91,6 +91,7 @@ class HousingList::Scraper
     end
 
     def scrape_rental_block(url)
+      @url = url
       html = open(url)
       doc = Nokogiri::HTML(html)
       @rental_block = doc.css(".housing ul").first
@@ -109,10 +110,20 @@ class HousingList::Scraper
 
     end
 
-    # def rental_option_href
-    #   @rental_option_url = []
-    #   @rental_block
-    #   binding.pry
-    # end
+    def rental_options_href
+      @root = @url.chomp("/")
+      @rental_urls = []
+      i = 0
+      @rental_block.css("li").collect do |item|
+        @rental_urls << item.children.attribute("href").value
+    end
+      @rental_urls.collect do |url|
+        @rental_urls[i] = "#{@root}#{url}"
+        i += 1
+    end
+      @rental_urls
+    binding.pry
+  end
+
 
 end
