@@ -6,11 +6,12 @@ class HousingList::Scraper
 
   def call
     scrape_states
-    state_hash
+    # state_hash
     city_nodes
-    city_arrays
-    state_city_hash
-    # state_and_city_hash
+    city_parser(@city_nodes[1])
+    # city_arrays
+    # state_city_hash
+
   end
 
   def scrape_states
@@ -64,29 +65,6 @@ class HousingList::Scraper
     end
 
 
-    # def city
-    #   i = 0
-    #   e = 0
-    #   @cities = []
-    #
-    #   doc = Nokogiri::HTML(open('https://www.craigslist.org/about/sites'))
-    #   a = doc.css(".colmask").first
-    #   a.css(".box ul").each do |cities|
-    #     @cities[i] = [cities.text]
-    #     i += 1
-    #   end
-    #   @cities.each do |group|
-    #     @cities[e] = group.join.split("\n")
-    #     e += 1
-    #   end
-    #   @cities.collect do |array|
-    #   array.shift
-    #   array.pop
-    # end
-    # @cities
-    #
-    # end
-
     def state_city_hash
       keys = @state_hash.keys
       i = 0
@@ -95,85 +73,34 @@ class HousingList::Scraper
         i += 1
       end
       @state_hash
-      binding.pry
+
     end
 
-# ---------------------------------------------------------------------------------------------
-
-#     def city_array
-#       i = 0
-#       e = 0
-#       @cities = []
+    def city_parser(node)
+      @city_urls = []
+      node.css("li").each do |city|
+        info = city.children
+        url = info.attribute("href").value
+        @city_urls << url
+      end
+      @city_urls
+      binding.pry
+    end
 #
 #
-#       doc = Nokogiri::HTML(open('https://www.craigslist.org/about/sites'))
-#       a = doc.css(".colmask").first
-#       a.css(".box ul").each do |cities|
-#         @cities[i] = cities
-#         i += 1
-#       end
-#       @cities
 #
-#       # @cities_scraped.each do |group|1
-#       #   group.css("li").each do |city|
-#       #     @cities << city.text
-#       #   end
-#       #   @cities
-#       #   binding.pry
-#       # end
+#       @city_urls << city.css("a href")
 #     end
-#
-#     def state_and_city_hash
-#         keys = state_hash.keys
-#
-#         i = 0
-#         keys.each do |state|
-#         city_array[i].css("li").each do |city|
-#           state_hash[state] << city.text
-#         end
-#         i += 1
-#       end
-#       state_hash
+#       @city_urls
 #       binding.pry
-#
-#   end
-#
-#     def state_city_hash_1
-#       i = 0
-#       keys = @state_city.keys
-#       doc = Nokogiri::HTML(open('https://www.craigslist.org/about/sites'))
-#       a = doc.css(".colmask").first
-#       a.css(".box ul").each do |cities|
-#         @state_city[keys[i]] = [cities.text]
-#         i += 1
-#         binding.pry
-#       end
-#       @state_city
-#
-# # Need to parse the cities so that they are seperate items in an array instead of just one.
-#
 #     end
 #
-#
-#
-#
-#
-#   # def state_city_hash
-#   #   @state_city = {}
-#   #   doc = Nokogiri::HTML(open('https://www.craigslist.org/about/sites'))
-#   #   a = doc.css(".colmask").first
-#   #     a.css(".box h4").each do |state|
-#   #       state_string = state.text.to_sym
-#   #       @state_city[state_string] = nil
-#   #
-#   #     end
-#   #     a.css (".box h4 li").each do |city|
-#   #       @state
-#   #     @state_city
-#   #     binding.pry
-#   #
-#   #   end
-#
-#
-#
+# a = city.children
+# b = a.attribute("href").value
+    # def scrape_city_node(node)
+    #   node.css("li").each |city|
+    #   city.attribute('href').value
+    # end
+
+
 end
