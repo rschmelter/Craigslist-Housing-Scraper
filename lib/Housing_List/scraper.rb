@@ -5,12 +5,14 @@ require 'pry'
 class HousingList::Scraper
 
   def call
-    scrape_states
-    # state_hash
-    city_nodes
-    city_parser(@city_nodes[1])
+    # scrape_states
+    # # state_hash
+    # city_nodes
+    # city_parser(@city_nodes[1])
     # city_arrays
     # state_city_hash
+    scrape_rental_block("https://bozeman.craigslist.org/")
+    scrape_rental_options
 
   end
 
@@ -84,23 +86,22 @@ class HousingList::Scraper
         @city_urls << url
       end
       @city_urls
-      binding.pry
+
     end
-#
-#
-#
-#       @city_urls << city.css("a href")
-#     end
-#       @city_urls
-#       binding.pry
-#     end
-#
-# a = city.children
-# b = a.attribute("href").value
-    # def scrape_city_node(node)
-    #   node.css("li").each |city|
-    #   city.attribute('href').value
-    # end
+
+    def scrape_rental_block(url)
+      html = open(url)
+      doc = Nokogiri::HTML(html)
+      @rental_block = doc.css(".housing ul").first
+    end
+
+    def scrape_rental_options
+      @rental_options = []
+      @rental_options << @rental_block.css("li .apa").text
+      @rental_options << @rental_block.css("li .roo").text
+      @rental_options
+
+    end
 
 
 end
