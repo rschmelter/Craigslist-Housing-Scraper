@@ -7,7 +7,8 @@ class HousingList::Scraper
   def call
     scrape_states
     state_hash
-    city
+    city_nodes
+    city_arrays
     state_city_hash
     # state_and_city_hash
   end
@@ -34,34 +35,63 @@ class HousingList::Scraper
       @state_hash
     end
 
-    def city
-      i = 0
-      e = 0
-      @cities = []
-
+    def city_nodes
+      @city_nodes = []
       doc = Nokogiri::HTML(open('https://www.craigslist.org/about/sites'))
       a = doc.css(".colmask").first
-      a.css(".box ul").each do |cities|
-        @cities[i] = [cities.text]
-        i += 1
+      a.css(".box ul").each do |nodes|
+        @city_nodes << nodes
       end
-      @cities.each do |group|
-        @cities[e] = group.join.split("\n")
-        e += 1
-      end
-      @cities.collect do |array|
-      array.shift
-      array.pop
+      @city_nodes
     end
-    @cities
+
+    def city_arrays
+      i = 0
+      @text_array = []
+      @city_arrays = []
+      @city_nodes.collect do |node|
+        @text_array << node.text
+      end
+      @text_array.collect do |cities|
+        @city_arrays << cities.split("\n")
+      end
+      @city_arrays.collect do |array|
+        array.pop
+        array.shift
+      end
+      @city_arrays
 
     end
+
+
+    # def city
+    #   i = 0
+    #   e = 0
+    #   @cities = []
+    #
+    #   doc = Nokogiri::HTML(open('https://www.craigslist.org/about/sites'))
+    #   a = doc.css(".colmask").first
+    #   a.css(".box ul").each do |cities|
+    #     @cities[i] = [cities.text]
+    #     i += 1
+    #   end
+    #   @cities.each do |group|
+    #     @cities[e] = group.join.split("\n")
+    #     e += 1
+    #   end
+    #   @cities.collect do |array|
+    #   array.shift
+    #   array.pop
+    # end
+    # @cities
+    #
+    # end
 
     def state_city_hash
       keys = @state_hash.keys
       i = 0
       keys.each do |state|
-        @state_hash[state] << @cities[i]
+        @state_hash[state] << @city_arrays[i]
         i += 1
       end
       @state_hash
@@ -146,4 +176,4 @@ class HousingList::Scraper
 #
 #
 #
-# end
+end
