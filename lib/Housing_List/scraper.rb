@@ -11,9 +11,10 @@ class HousingList::Scraper
     # city_parser(@city_nodes[1])
     # city_arrays
     # state_city_hash
-    scrape_rental_block("https://bozeman.craigslist.org/")
-    scrape_rental_options
-    rental_options_href
+    # scrape_rental_block("https://bozeman.craigslist.org/")
+    # scrape_rental_options
+    # rental_options_href
+    scrape_housing_type_page("https://bozeman.craigslist.org/d/sublets-temporary/search/sub")
 
   end
 
@@ -131,13 +132,22 @@ class HousingList::Scraper
 
   end
 
-
-
   def scrape_housing_type_page(housing_type_url)
-
-
-
+    @result_hash = {}
+    i = 0
+    html = open(housing_type_url)
+    doc = Nokogiri::HTML(html)
+    doc.css(".result-row .result-info").each do |result|
+      size = result.css(".housing").text.split
+      size.delete("-")
+      size = size.join(" ")
+      @result_hash[i] = result.css(".result-date").text, result.css(".result-title").text, result.css(".result-price").text, size, result.css(".result-hood").text
+      i += 1
   end
+  @result_hash
+  binding.pry
+  # Going to have to deal with edge cases - delete empty strings
+end
 
 
 end
