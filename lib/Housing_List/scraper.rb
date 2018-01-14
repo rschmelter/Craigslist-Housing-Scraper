@@ -12,7 +12,7 @@ class HousingList::Scraper
     # city_arrays
     # state_city_hash
     scrape_rental_block("https://bozeman.craigslist.org/")
-    # scrape_rental_options
+    scrape_rental_options
     rental_options_href
 
   end
@@ -99,12 +99,14 @@ class HousingList::Scraper
     end
 
 
-
-
     def scrape_rental_options
+      remove_at_index = [1, 2, 3, 4, 5, 7]
       @rental_options = []
       @rental_block.css("li").each do |type|
         @rental_options << type.text
+      end
+      @rental_options = @rental_options.reject.with_index do |e, i|
+        remove_at_index.include?(i)
       end
       @rental_options
 
@@ -114,6 +116,7 @@ class HousingList::Scraper
       @root = @url.chomp("/")
       @rental_urls = []
       i = 0
+      remove_at_index = [1, 2, 3, 4, 5, 7]
       @rental_block.css("li").collect do |item|
         @rental_urls << item.children.attribute("href").value
     end
@@ -121,8 +124,19 @@ class HousingList::Scraper
         @rental_urls[i] = "#{@root}#{url}"
         i += 1
     end
+      @rental_urls = @rental_urls.reject.with_index do |e, i|
+        remove_at_index.include?(i)
+    end
       @rental_urls
-    binding.pry
+
+  end
+
+
+
+  def scrape_housing_type_page(housing_type_url)
+
+
+
   end
 
 
