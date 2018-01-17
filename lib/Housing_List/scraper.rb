@@ -5,7 +5,7 @@ require 'pry'
 class HousingList::Scraper
 
   def call
-    # scrape_states
+    scrape_states
     # # state_hash
     # city_nodes
     # city_parser(@city_nodes[1])
@@ -14,7 +14,7 @@ class HousingList::Scraper
     # scrape_rental_block("https://bozeman.craigslist.org/")
     # scrape_rental_options
     # rental_options_href
-    scrape_housing_type_page("https://bozeman.craigslist.org/d/sublets-temporary/search/sub")
+    # scrape_housing_type_page("https://flagstaff.craigslist.org/d/apts-housing-for-rent/search/apa")
 
   end
 
@@ -28,6 +28,7 @@ class HousingList::Scraper
         i += 1
       end
       states
+
   end
 
   def state_hash

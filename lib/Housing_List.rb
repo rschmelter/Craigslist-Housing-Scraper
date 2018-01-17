@@ -11,5 +11,5 @@ require 'nokogiri'
 
 require_relative "Housing_List/version"
 require_relative "Housing_List/cli"
-require_relative "Housing_List/housing"
+# require_relative "Housing_List/housing"
 require_relative "Housing_List/scraper"
