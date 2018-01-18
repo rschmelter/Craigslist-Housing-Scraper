@@ -6,11 +6,11 @@ class HousingList::Scraper
 
   def call
     scrape_states
-    # # state_hash
-    # city_nodes
-    # city_parser(@city_nodes[1])
-    # city_arrays
-    # state_city_hash
+    state_hash
+    city_nodes
+    city_parser(@city_nodes[1])
+    city_arrays
+    state_city_hash
     # scrape_rental_block("https://bozeman.craigslist.org/")
     # scrape_rental_options
     # rental_options_href
@@ -19,16 +19,14 @@ class HousingList::Scraper
   end
 
   def scrape_states
-    i = 0
+
     states = []
     doc = Nokogiri::HTML(open('https://www.craigslist.org/about/sites'))
     a = doc.css(".colmask").first
       a.css(".box h4").each do |state|
-        states[i] = state.text
-        i += 1
+        states << state.text
       end
       states
-
   end
 
   def state_hash
@@ -69,6 +67,16 @@ class HousingList::Scraper
 
     end
 
+    def city_parser(node)
+      @city_urls = []
+      node.css("li").each do |city|
+        info = city.children
+        url = info.attribute("href").value
+        @city_urls << url
+      end
+      @city_urls
+
+    end
 
     def state_city_hash
       keys = @state_hash.keys
@@ -81,16 +89,16 @@ class HousingList::Scraper
 
     end
 
-    def city_parser(node)
-      @city_urls = []
-      node.css("li").each do |city|
-        info = city.children
-        url = info.attribute("href").value
-        @city_urls << url
-      end
-      @city_urls
+    # def state_city_url_hash
+    #   keys = @state_hash.keys
+    #   i = 0
+    #   keys.each do |state|
+    #     @state_hash[state] << @city_urls[i]
+    #     i += 1
+    #   end
+    #
+    # end
 
-    end
 
     def scrape_rental_block(url)
       @url = url
@@ -146,7 +154,7 @@ class HousingList::Scraper
       i += 1
   end
   @result_hash
-  binding.pry
+
   # Going to have to deal with edge cases - delete empty strings
 end
 
