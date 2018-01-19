@@ -6,12 +6,15 @@ class HousingList::City
   @@all = []
 
   def self.make_cities(state)
-    HousingList::Scraper.state_city_hash[state.to_sym][0].each do |city|
-      self.new(city,
+    i = 0
+    HousingList::Scraper.state_city_hash[state].each do |array|
+      self.new(array[i][i],
               state,
+              array[i + 1][i]
               )
-
-  end
+              i += 1
+      end
+    end
 
   def initialize(name, state, url)
     @name = name
