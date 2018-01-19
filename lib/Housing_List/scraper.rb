@@ -8,9 +8,10 @@ class HousingList::Scraper
     scrape_states
     state_hash
     city_nodes
-    city_parser(@city_nodes[1])
+    # city_parser(@city_nodes[1])
     city_arrays
     state_city_hash
+    city_urls
     # scrape_rental_block("https://bozeman.craigslist.org/")
     # scrape_rental_options
     # rental_options_href
@@ -67,16 +68,34 @@ class HousingList::Scraper
 
     end
 
-    def city_parser(node)
+    def city_urls
       @city_urls = []
-      node.css("li").each do |city|
-        info = city.children
-        url = info.attribute("href").value
-        @city_urls << url
+      i = 0
+      @city_nodes.each do |group|
+        @city_urls[i] = []
+        group.css("li").each do |city|
+          info = city.children
+          url = info.attribute("href").value
+
+          @city_urls[i] << url
+        end
+        i += 1
       end
       @city_urls
-
+      binding.pry
     end
+
+    # def city_parser(node)
+    #   @city_urls = []
+    #   node.css("li").each do |city|
+    #     info = city.children
+    #     url = info.attribute("href").value
+    #     @city_urls << url
+    #   end
+    #   @city_urls
+    #
+    # end
+
 
     def state_city_hash
       keys = @state_hash.keys
