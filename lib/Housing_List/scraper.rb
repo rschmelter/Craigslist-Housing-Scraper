@@ -10,8 +10,10 @@ class HousingList::Scraper
     city_nodes
     # city_parser(@city_nodes[1])
     city_arrays
-    state_city_hash
     city_urls
+    state_city_hash
+
+    # zip_city_url
     # scrape_rental_block("https://bozeman.craigslist.org/")
     # scrape_rental_options
     # rental_options_href
@@ -33,8 +35,7 @@ class HousingList::Scraper
   def state_hash
     @state_hash = {}
     scrape_states.each do |state|
-      state_sym = state.to_sym
-      @state_hash[state_sym] = []
+      @state_hash[state] = []
 
       end
       @state_hash
@@ -82,8 +83,13 @@ class HousingList::Scraper
         i += 1
       end
       @city_urls
-      binding.pry
+
     end
+
+    # def zip_city_url
+    #   zip = @city_arrays.zip(@city_urls)
+    #   binding.pry
+    # end
 
     # def city_parser(node)
     #   @city_urls = []
@@ -102,9 +108,11 @@ class HousingList::Scraper
       i = 0
       keys.each do |state|
         @state_hash[state] << @city_arrays[i]
+        @state_hash[state] << @city_urls[i]
         i += 1
       end
       @state_hash
+      binding.pry
 
     end
 
