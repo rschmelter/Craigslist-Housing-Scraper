@@ -5,7 +5,7 @@ class HousingList::State
 
   @@all = []
   def self.make_states
-    HousingList::Scraper.scrape_states.each do |state|
+    HousingList::Scraper.make_states.each do |state|
       self.new(state)
   end
 
@@ -18,6 +18,7 @@ class HousingList::State
 
   def self.all
     @@all
+
   end
 
   def add_city(city)
