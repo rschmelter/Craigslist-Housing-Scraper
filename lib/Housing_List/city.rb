@@ -20,7 +20,7 @@ class HousingList::City
   def initialize(name, state, url)
     @name = name
     @rentals = []
-    HousingList::State.add_city = self
+    state.add_city(self)
     @@all << self
   end
 

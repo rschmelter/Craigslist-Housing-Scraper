@@ -5,8 +5,8 @@ class HousingList::CLI
   def show_states
     states_array = []
     HousingList::Scraper.new.make_states.each do |state|
-        states_array << state
         state = HousingList::State.new(state)
+        states_array << state
 
     end
 
@@ -18,7 +18,7 @@ class HousingList::CLI
         valid = true
         i = 1
         states_array.each do |state|
-          puts "#{i}. #{state}"
+          puts "#{i}. #{state.name}"
           i += 1
         end
       else
@@ -42,10 +42,11 @@ class HousingList::CLI
   end
 
   def show_cities(state)
-    HousingList::Scraper.new.make_cities[state].each do |array|
+    i = 0
+    HousingList::Scraper.new.make_cities[state.name].each do |array|
       HousingList::City.new(array[i][i],
-              state,
-              array[i + 1][i]
+              state.name,
+              # array[i + 1][i] having a problem here.
               )
               i += 1
     end
