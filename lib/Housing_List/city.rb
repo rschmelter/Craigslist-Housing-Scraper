@@ -3,15 +3,15 @@ require 'pry'
 class HousingList::City
   attr_accessor :name, :state, :url
 
-  def self.make_cities(state)
-    HousingList::Scraper.new.make_cities[state].each do |array|
-      self.new(array[i][i],
-              state,
-              array[i + 1][i]
-              )
-              i += 1
-      end
-    end
+  # def self.make_cities(state)
+  #   # HousingList::Scraper.new.make_cities[state].each do |array|
+  #   #   self.new(array[i][i],
+  #   #           state,
+  #   #           array[i + 1][i]
+  #   #           )
+  #   #           i += 1
+  #   #   end
+  #   # end
 
   @@all = []
 
@@ -20,7 +20,7 @@ class HousingList::City
   def initialize(name, state, url)
     @name = name
     @rentals = []
-    state.add_city = self
+    HousingList::State.add_city = self
     @@all << self
   end
 

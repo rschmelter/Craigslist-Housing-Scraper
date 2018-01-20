@@ -1,3 +1,5 @@
+require 'pry'
+
 class HousingList::CLI
 
   def show_states
@@ -40,8 +42,18 @@ class HousingList::CLI
   end
 
   def show_cities(state)
-    puts "#{state}"
+    HousingList::Scraper.new.make_cities[state].each do |array|
+      HousingList::City.new(array[i][i],
+              state,
+              array[i + 1][i]
+              )
+              i += 1
+    end
+    HousingList::City.all.each do |city|
+      puts "#{city.name}"
+
   end
+end
 
 
 
