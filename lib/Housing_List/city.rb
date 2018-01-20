@@ -39,6 +39,6 @@ class HousingList::City
 
 
 
-binding.pry
+
 
 end
