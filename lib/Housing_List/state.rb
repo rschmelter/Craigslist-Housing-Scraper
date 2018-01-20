@@ -4,10 +4,7 @@ class HousingList::State
   attr_accessor :name
 
   @@all = []
-  def self.make_states
-    HousingList::Scraper.make_states.each do |state|
-      self.new(state)
-  end
+
 
 
   def initialize(name)
