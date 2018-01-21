@@ -36,7 +36,7 @@ class HousingList::State
   def rentals
     self.cities.types.collect do |type|
       type.rental
-    end
+  end
 
   end
 

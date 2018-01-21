@@ -69,7 +69,7 @@ class HousingList::CLI
 end
 
   def show_options(city)
-    HousingList::Scraper.new.make_types.each do |array|
+    HousingList::Scraper.new.make_types(city.url).each do |array|
       HousingList::Type.new(array[0],
       city,
       array[1]
@@ -95,8 +95,38 @@ end
 
 
   def show_rentals(type)
-  end
+    result_hash = HousingList::Scraper.new.make_rentals(type.url)
 
+    result_hash.each do |key, value|
+      HousingList::Rental.new(type, key.to_s)
+    end
+    i = 1
+    type.rentals.each do |rental|
+      # binding.pry rental is returning as an empty array
+      rental.list_date = result_hash[i][0]
+      rental.description = result_hash[i][1]
+      rental.price = result_hash[i][2]
+      rental.size = result_hash[i][3]
+      rental.area = result_hash[i][4]
+      i += 1
+    end
+    type.rentals.each do |rental|
+      puts "Date Listed: #{rental.list_date}"
+      puts "Description: #{rental.description}"
+      puts "Price: #{rental.price}"
+      puts "Size: #{rental.size}"
+      puts "Area: #{rental.area}"
+    end
+  end
+  # def get_rental_info(url)
+  #   @info = Scraper.new.scrape_housing_type_page(url)
+  #   @list_date = @info[@list_number][0]
+  #   @description = @info[@list_number][1]
+  #   @price = @info[@list_number][2]
+  #   @size = @info[@list_number][3]
+  #   @area = @info[@list_number][4]
+  #   @url = @info[@list_number][5]
+  # end
 
 
 

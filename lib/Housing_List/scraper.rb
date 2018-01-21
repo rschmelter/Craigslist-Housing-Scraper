@@ -15,14 +15,15 @@ class HousingList::Scraper
     city_urls
     state_city_hash
   end
-
-  def make_types
-    scrape_rental_block("https://masoncity.craigslist.org/")
+  def make_types(url)
+    scrape_rental_block(url)
     scrape_rental_options
     rental_options_href
     rental_options_and_urls
   end
-
+  def make_rentals(url)
+    scrape_housing_type_page(url)
+  end
 
   def scrape_states
 
@@ -159,10 +160,10 @@ class HousingList::Scraper
       @rental_options_and_urls
     end
 
-  def scrape_housing_type_page(housing_type_url)
+  def scrape_housing_type_page(url)
     @result_hash = {}
-    i = 0
-    html = open(housing_type_url)
+    i = 1
+    html = open(url)
     doc = Nokogiri::HTML(html)
     doc.css(".result-row .result-info").each do |result|
       size = result.css(".housing").text.split
@@ -172,6 +173,7 @@ class HousingList::Scraper
       i += 1
   end
   @result_hash
+
 
   # Going to have to deal with edge cases - delete empty strings
 end

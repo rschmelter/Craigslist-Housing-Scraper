@@ -13,9 +13,14 @@ class HousingList::Type
   end
 
   def add_rental(rental)
-    @rentals << []
+    @rentals << rental
     rental.type = self
   end
+
+  def rentals
+    @rentals
+  end
+
 
 
 end

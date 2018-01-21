@@ -1,29 +1,39 @@
 require 'pry'
 
 class HousingList::Rental
-  attr_accessor :type, :list_number :list_date, :description, :price, :size, :area, :url, :city
+  attr_accessor :type, :list_date, :list_number, :description, :price, :size, :area
 
   @@all = []
 
-  def initialize(type = nil, list_number = nil)
+  def initialize(type, list_number)
     @type = type
     @list_number = list_number
     @@all << self
-    city.add_rental(self)
+    type.add_rental(self)
   end
 
-  self.all
+  def self.all
     @@all
   end
 
-  def get_rental_info(url)
-    @info = Scraper.new.scrape_housing_type_page(url)
-    @list_date = @info[@list_number][0]
-    @description = @info[@list_number][1]
-    @price = @info[@list_number][2]
-    @size = @info[@list_number][3]
-    @area = @info[@list_number][4]
-    @url = @info[@list_number][5]
+  def list_date
+    @list_date
+  end
+
+  def description
+    @description
+  end
+
+  def price
+    @price
+  end
+
+  def size
+    @size
+  end
+
+  def area
+    @area
   end
 
 end
