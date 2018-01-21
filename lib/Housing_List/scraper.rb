@@ -115,6 +115,7 @@ class HousingList::Scraper
         i += 1
       end
       @state_hash
+
     end
 
 

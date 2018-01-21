@@ -42,18 +42,19 @@ class HousingList::CLI
   end
 
   def show_cities(state)
-    i = 0
-    HousingList::Scraper.new.make_cities[state.name].each do |array|
-      HousingList::City.new(array[i][i],
-              state.name,
-              # array[i + 1][i] having a problem here.
+    state_hash = HousingList::Scraper.new.make_cities[state.name]
+    zipped_hash = state_hash[0].zip(state_hash[1])
+    zipped_hash.each do |array|
+      HousingList::City.new(array[0],
+              state,
+              array[1]
               )
-              i += 1
-    end
-    HousingList::City.all.each do |city|
-      puts "#{city.name}"
 
+    end
+    HousingList::City.all.each_with_index do |city, index|
+      puts "#{index + 1}. #{city.name.strip}"
   end
+  puts "Select the number of the city to see a list of rental options."
 end
 
 

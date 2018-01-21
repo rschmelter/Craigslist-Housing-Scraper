@@ -8,3 +8,4 @@ require_relative '../lib/Housing_List'
 # HousingList::State.make_states
 # HousingList::State.all
 HousingList::CLI.new.show_states
+# HousingList::Scraper.new.make_cities
