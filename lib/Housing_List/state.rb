@@ -27,9 +27,15 @@ class HousingList::State
     @cities
   end
 
-  def rentals
+  def types
     self.cities.collect do |city|
-      city.rental
+      city.type
+    end
+  end
+
+  def rentals
+    self.cities.types.collect do |type|
+      type.rental
     end
 
   end

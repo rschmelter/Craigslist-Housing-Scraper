@@ -14,21 +14,15 @@ class HousingList::Scraper
     city_arrays
     city_urls
     state_city_hash
+  end
 
+  def make_types
+    scrape_rental_block("https://masoncity.craigslist.org/")
+    scrape_rental_options
+    rental_options_href
+    rental_options_and_urls
   end
-  def call
-    scrape_states
-    state_hash
-    city_nodes
-    city_arrays
-    city_urls
-    state_city_hash
-    # zip_city_url
-    # scrape_rental_block("https://bozeman.craigslist.org/")
-    # scrape_rental_options
-    # rental_options_href
-    # scrape_housing_type_page("https://flagstaff.craigslist.org/d/apts-housing-for-rent/search/apa")
-  end
+
 
   def scrape_states
 
@@ -158,8 +152,12 @@ class HousingList::Scraper
         remove_at_index.include?(i)
     end
       @rental_urls
+    end
 
-  end
+    def rental_options_and_urls
+      @rental_options_and_urls = @rental_options.zip(@rental_urls)
+      @rental_options_and_urls
+    end
 
   def scrape_housing_type_page(housing_type_url)
     @result_hash = {}
