@@ -102,7 +102,7 @@ end
     end
     i = 1
     type.rentals.each do |rental|
-      # binding.pry rental is returning as an empty array
+      # Here I want only the renals form the type object with the correct associated city
       rental.list_date = result_hash[i][0]
       rental.description = result_hash[i][1]
       rental.price = result_hash[i][2]
@@ -110,23 +110,21 @@ end
       rental.area = result_hash[i][4]
       i += 1
     end
+    i = 1
     type.rentals.each do |rental|
+      puts "#{i}"
       puts "Date Listed: #{rental.list_date}"
       puts "Description: #{rental.description}"
       puts "Price: #{rental.price}"
       puts "Size: #{rental.size}"
       puts "Area: #{rental.area}"
+      puts "___________________________________________________________"
+      puts ""
+
+    i += 1
     end
   end
-  # def get_rental_info(url)
-  #   @info = Scraper.new.scrape_housing_type_page(url)
-  #   @list_date = @info[@list_number][0]
-  #   @description = @info[@list_number][1]
-  #   @price = @info[@list_number][2]
-  #   @size = @info[@list_number][3]
-  #   @area = @info[@list_number][4]
-  #   @url = @info[@list_number][5]
-  # end
+
 
 
 

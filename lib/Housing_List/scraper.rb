@@ -175,7 +175,7 @@ class HousingList::Scraper
   @result_hash
 
 
-  # Going to have to deal with edge cases - delete empty strings
+
 end
 
 
