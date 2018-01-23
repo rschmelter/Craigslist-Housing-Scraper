@@ -7,7 +7,7 @@ class HousingList::Scraper
   def make_states
     scrape_states
   end
-  def make_cities
+  def make_states_cities
     scrape_states
     state_hash
     city_nodes

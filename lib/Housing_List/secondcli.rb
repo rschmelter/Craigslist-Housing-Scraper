@@ -1,4 +1,4 @@
-class HousingList::Second
+class HousingList::CLI
 
 
   def start
@@ -9,14 +9,6 @@ class HousingList::Second
       @states_array << state
     end
     show_states
-
-    # @states_array = []
-    # HousingList::Scraper.new.make_states.each do |state|
-    #   state = HousingList::State.new(state)
-    #   @states_array << state
-    # end
-    # @state_hash = HousingList::Scraper.new.make_cities
-    # show_states
   end
 
   def show_states

@@ -7,7 +7,8 @@ require_relative '../lib/Housing_List'
 # HousingList::Scraper.new.call
 # HousingList::State.make_states
 # HousingList::State.all
-HousingList::CLI.new.show_states
+# HousingList::CLI.new.show_states
 # HousingList::Scraper.new.make_cities
 # HousingList::Scraper.new.show_rental_types
 # HousingList::Scraper.new.make_rentals("https://masoncity.craigslist.org/d/apts-housing-for-rent/search/apa")
+HousingList::CLI.new.start
