@@ -117,6 +117,7 @@ class HousingList::Second
       rental.price = result_hash[i][2]
       rental.size = result_hash[i][3]
       rental.area = result_hash[i][4]
+      rental.url = result_hash[i][5]
       i += 1
     end
     i = 1
@@ -127,6 +128,7 @@ class HousingList::Second
       puts "Price: #{rental.price}"
       puts "Size: #{rental.size}"
       puts "Area: #{rental.area}"
+      puts "Learn more by visiting: #{rental.url}"
       puts "___________________________________________________________"
       puts ""
 

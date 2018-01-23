@@ -1,7 +1,7 @@
 require 'pry'
 
 class HousingList::Rental
-  attr_accessor :type, :list_date, :list_number, :description, :price, :size, :area
+  attr_accessor :type, :list_date, :list_number, :description, :price, :size, :area, :url
 
   @@all = []
 
@@ -34,6 +34,10 @@ class HousingList::Rental
 
   def area
     @area
+  end
+
+  def url
+    @url
   end
 
 end

@@ -166,10 +166,12 @@ class HousingList::Scraper
     html = open(url)
     doc = Nokogiri::HTML(html)
     doc.css(".result-row .result-info").each do |result|
+
+      url = result.css("a").first.attr("href")
       size = result.css(".housing").text.split
       size.delete("-")
       size = size.join(" ")
-      @result_hash[i] = result.css(".result-date").text, result.css(".result-title").text, result.css(".result-price").text, size, result.css(".result-hood").text
+      @result_hash[i] = result.css(".result-date").text, result.css(".result-title").text, result.css(".result-price").text, size, result.css(".result-hood").text, url
       i += 1
   end
   @result_hash
