@@ -40,9 +40,9 @@ class HousingList::State
 
   end
 
-  def self.find_by_name(state)
+  def self.find_by_name(name)
     @@all.detect do |state|
-      state.name = state
+      state.name == name
     end
   end
 

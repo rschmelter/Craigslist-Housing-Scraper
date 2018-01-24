@@ -7,7 +7,7 @@ class HousingList::CLI
     @states_array = []
     @state_hash = HousingList::Scraper.new.make_states_cities
     @state_hash.keys.each do |state|
-      state = HousingList::State.new(state)
+      HousingList::State.new(state)
       @states_array << state
     end
     show_states
@@ -15,21 +15,32 @@ class HousingList::CLI
   end
 
   def show_states
-    puts "Welcome! To get started, type 'list' to show a list of states and areas with available rentals"
+    puts "Welcome! To get started, type 'list' to show a list of states and areas with available rentals. Or type the name of the state."
       valid = false
       while valid == false
         input = gets.strip
-        if input.downcase == "list"
+        split_input = input.split(" ").collect {|part| part.capitalize}
+        detect_input = split_input.join(" ")
+        state_object = HousingList::State.find_by_name(detect_input)
+        if state_object != nil
+           valid = true
+           show_cities(state_object)
+        elsif input.downcase == "list"
           valid = true
           i = 1
           @states_array.each do |state|
             puts "#{i}. #{state.name}"
             i += 1
           end
+          select_state
         else
           puts "Invalid input. Please type 'list' to show states"
         end
       end
+
+    end
+
+    def select_state
       puts "Type the number of the state to see a list of cities with available rentals."
         valid = false
         while valid == false
@@ -107,7 +118,7 @@ class HousingList::CLI
     i = 1
     @type = city.types.detect {|rental_type| rental_type == type}
     @type.rentals.each do |rental|
-      # Here I want only the renals form the type object with the correct associated city
+
       rental.list_date = result_hash[i][0]
       rental.description = result_hash[i][1]
       rental.price = result_hash[i][2]
