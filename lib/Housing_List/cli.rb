@@ -7,7 +7,7 @@ class HousingList::CLI
     @states_array = []
     @state_hash = HousingList::Scraper.new.make_states_cities
     @state_hash.keys.each do |state|
-      HousingList::State.new(state)
+      state = HousingList::State.new(state)
       @states_array << state
     end
     show_states
@@ -34,7 +34,7 @@ class HousingList::CLI
           end
           select_state
         else
-          puts "Invalid input. Please type 'list' to show states"
+          puts "Invalid input. Please type 'list' to show states, or type the name of the state to see a list of cities."
         end
       end
 
