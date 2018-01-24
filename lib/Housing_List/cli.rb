@@ -16,6 +16,7 @@ class HousingList::CLI
 
   def show_states
     puts "Welcome! To get started, type 'list' to show a list of states and areas with available rentals. Or type the name of the state."
+    puts " "
       valid = false
       while valid == false
         input = gets.strip
@@ -32,9 +33,11 @@ class HousingList::CLI
             puts "#{i}. #{state.name}"
             i += 1
           end
+          puts " "
           select_state
         else
           puts "Invalid input. Please type 'list' to show states, or type the name of the state to see a list of cities."
+          puts " "
         end
       end
 
@@ -42,6 +45,7 @@ class HousingList::CLI
 
     def select_state
       puts "Type the number of the state to see a list of cities with available rentals."
+      puts " "
         valid = false
         while valid == false
           input = gets.strip
@@ -52,6 +56,7 @@ class HousingList::CLI
             show_cities(selection)
           else
             puts "Invalid selection. Please choos a number between 1 and 52"
+            puts " "
           end
         end
   end
@@ -68,7 +73,9 @@ class HousingList::CLI
     state.cities.each_with_index do |city, index|
       puts "#{index + 1}. #{city.name.strip}"
     end
+    puts " "
     puts "Select the number of the city to see the types of rentals that are available."
+    puts " "
     valid = false
     while valid == false
       input = gets.strip
@@ -79,6 +86,7 @@ class HousingList::CLI
         show_options(selection)
       else
         puts "Invalid selection. Please type the number of a city to see the types of rentals available."
+        puts " "
       end
     end
   end
@@ -93,7 +101,9 @@ class HousingList::CLI
       city.types.each_with_index do |type, index|
       puts "#{index + 1}. #{type.name}"
     end
+    puts " "
     puts "Select the number of an option to see the most recently listed rentals."
+    puts " "
     valid = false
     while valid == false
       input = gets.strip
@@ -104,6 +114,7 @@ class HousingList::CLI
         show_rentals(city, selection)
       else
         puts "Invalid selection. Please select the number of a rental type to see the most recent rentals in you chosen city."
+        puts " "
       end
     end
   end
@@ -129,7 +140,7 @@ class HousingList::CLI
     end
     i = 1
     @type.rentals.each do |rental|
-      puts "#{i}"
+      puts "#{i})"
       puts "Date Listed: #{rental.list_date}"
       puts "Description: #{rental.description}"
       puts "Price: #{rental.price}"
@@ -141,6 +152,29 @@ class HousingList::CLI
 
     i += 1
     end
+    reset(city)
+  end
+
+  def reset(city)
+    puts "Type 'city' to see other options in this state, 'state' to see a list of states, or 'quit' to exit"
+    valid = false
+    while valid == false
+      input = gets.strip
+    if input.downcase == "city"
+      valid = true
+      show_cities(city.state)
+    elsif input.downcase == "state"
+      valid = true
+      show_states
+    elsif input.downcase == "quit"
+      valid = true
+      puts "Have a nice day!"
+      exit
+    else
+      puts "Invalid input. Please select a valid option."
+    end
+  end
+
   end
 
 end
