@@ -1,4 +1,6 @@
-class HousingList::Second
+require 'pry'
+
+class HousingList::CLI
 
 
   def start
@@ -10,13 +12,6 @@ class HousingList::Second
     end
     show_states
 
-    # @states_array = []
-    # HousingList::Scraper.new.make_states.each do |state|
-    #   state = HousingList::State.new(state)
-    #   @states_array << state
-    # end
-    # @state_hash = HousingList::Scraper.new.make_cities
-    # show_states
   end
 
   def show_states
@@ -95,7 +90,7 @@ class HousingList::Second
       if (1..city.types.length).include?(type_number)
         valid = true
         selection = city.types[type_number - 1]
-        show_rentals(selection)
+        show_rentals(city, selection)
       else
         puts "Invalid selection. Please select the number of a rental type to see the most recent rentals in you chosen city."
       end
@@ -103,14 +98,15 @@ class HousingList::Second
   end
 
 
-  def show_rentals(type)
+  def show_rentals(city, type)
     result_hash = HousingList::Scraper.new.make_rentals(type.url)
 
     result_hash.each do |key, value|
-      HousingList::Rental.new(type, key.to_s)
+      HousingList::Rental.new(city, type, key.to_s)
     end
     i = 1
-    type.rentals.each do |rental|
+    @type = city.types.detect {|rental_type| rental_type == type}
+    @type.rentals.each do |rental|
       # Here I want only the renals form the type object with the correct associated city
       rental.list_date = result_hash[i][0]
       rental.description = result_hash[i][1]
@@ -121,7 +117,7 @@ class HousingList::Second
       i += 1
     end
     i = 1
-    type.rentals.each do |rental|
+    @type.rentals.each do |rental|
       puts "#{i}"
       puts "Date Listed: #{rental.list_date}"
       puts "Description: #{rental.description}"

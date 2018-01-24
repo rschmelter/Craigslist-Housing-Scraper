@@ -172,6 +172,7 @@ class HousingList::Scraper
       size.delete("-")
       size = size.join(" ")
       @result_hash[i] = result.css(".result-date").text, result.css(".result-title").text, result.css(".result-price").text, size, result.css(".result-hood").text, url
+
       i += 1
   end
   @result_hash

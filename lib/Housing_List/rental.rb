@@ -5,7 +5,7 @@ class HousingList::Rental
 
   @@all = []
 
-  def initialize(type, list_number)
+  def initialize(city, type, list_number)
     @type = type
     @list_number = list_number
     @@all << self

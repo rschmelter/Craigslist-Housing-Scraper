@@ -40,6 +40,11 @@ class HousingList::State
 
   end
 
+  def self.find_by_name(state)
+    @@all.detect do |state|
+      state.name = state
+    end
+  end
 
 
 
